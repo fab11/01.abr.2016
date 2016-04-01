@@ -1,0 +1,64 @@
+#NORMALMENTE SE UTILIZA EL MODELO ADITIVO...Este modelo es apropiado cuando la magnitud de las fluctuaciones estacionales 
+#de la serie no varia al hacerlo la tendencia
+
+##SE UTILIZA MULTIPLICATIVO
+
+#CUANDO LA MAGNITUD DE las fluctuaciones estacionales de la serie crece y decrece proporcionalmente con los crecimientos
+#de la tendencia, respect.
+
+##una vez que logramos descomponer la st en diversos los elementos de estacionalidad y tendencia hay que desestacionalizar
+#la st y eliminar la tendencia
+
+###EXISTE TENDENCIA cuando existe un patron en los datos a largo plazo ya sea que aumenten o disminuyan los datos
+###EXISTE ESTACIONALIDAD cuando la st es influenciada por factores estacionales (ejemplo:trimestre del año, mes, dia de la semana)
+
+##Existen componentes ciclicos de los datos cuando se detectan incrementos y caidas que no son de tiempo determinado
+##(ejemplo: crisis economicas), duracion por lo general de al menos 2 años.
+
+
+
+##De estos 3 elementos normalmente existen confusiones para detectarlos entre la estacionalidad y el componente ciclico
+#Principales diferencias entre estos dos componentes:
+# 1(patron estacional longitud constante; patron ciclico longitud variable)
+# 2(duracion media del componente ciclico mas largo que la longitud del patron estacional)
+# 3(magnitud del ciclo mas variable que magnitud del patron estacional)
+# 4(El momento de picos y ciadas es predecible es predecible con los datos estacionales pero impredecible a largo plazo
+# con datos ciclicos)
+
+
+install.packages("fpp")
+require (fpp)
+help(fpp)
+plot(window(elec,start = 1986), ylab="GWh",xlab="year", main="Australian electricity production")
+#estacionalidad, tendencia yo ciclico
+plot(bricksq, ylab="million units", xlab="year", main="Australian clay brick production")
+###esta y ciclo no mucha tendencia
+plot(hsales, main="sales of new one-family houses, USA", ylab="Total sales", xlab="year")
+#no esta ni tendencia posible ciclo
+#######ejemplos graficas detectar tendencia, estacionalidad y ciclo
+acc1<-read.csv("C:\\Users\\SALA-C26\\Downloads\\ICA.csv", header = T)
+a1<-ts(acc1[,5], start = 2000, frequency = 12)
+plot(a1 , main="accion 1", xlab="año", 
+     ylab="cierre")
+###la accion 1 presenta tendencia y despues es ciclica
+
+acc2<-read.csv("C:\\Users\\SALA-C26\\Downloads\\BIMBO.csv", header = T)
+a2<-ts(acc2[,5], start = 2000, frequency = 12)
+plot(a2)
+#La accion 2 presenta tendenciahasta el año 2007 presenta dos ciclos y en el año 2010 vuelve a presentar tendencia
+acc3<-read.csv("C:\\Users\\SALA-C26\\Downloads\\ELEKTRA.csv", header = T)
+a3<-ts(acc3[,5], start = 2000, frequency = 12)
+plot(a3)
+##La accion 3 presenta tendencia de 2000 a 2010 despues se observan ciclos       
+
+jpeg("acc1.jpg")
+plot(a1)
+dev.off()
+
+jpeg("acc2.jpg")
+plot(a2)
+dev.off()
+
+jpeg("acc3.jpg")
+plot(a3)
+dev.off()
